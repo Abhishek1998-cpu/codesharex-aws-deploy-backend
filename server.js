@@ -92,22 +92,26 @@ App.post("/run", async (req, res) => {
     res.status(201).json({ success: true, jobId });
     let output;
     job["startedAt"] = new Date();
-    if (language === "py") {
-      output = await executePy(filePath);
-    } else if (language === "js") {
-      console.log("Execute Js");
-      output = await executeJs(filePath);
-    } else if (language === "c") {
-      output = await executeC(filePath);
-    } else if (language === "java") {
-      output = await executeJava(filePath);
-    } else {
-      output = await executeCpp(filePath);
+    try {
+      if (language === "py") {
+        output = await executePy(filePath);
+      } else if (language === "js") {
+        console.log("Execute Js");
+        output = await executeJs(filePath);
+      } else if (language === "c") {
+        output = await executeC(filePath);
+      } else if (language === "java") {
+        output = await executeJava(filePath);
+      } else {
+        output = await executeCpp(filePath);
+      }
+      job["completedAt"] = new Date();
+      job["status"] = "success";
+      job["output"] = output;
+      await job.save();
+    } catch (error) {
+      console.log(error);
     }
-    job["completedAt"] = new Date();
-    job["status"] = "success";
-    job["output"] = output;
-    await job.save();
   } catch (err) {
     job["completedAt"] = new Date();
     job["status"] = "error";
