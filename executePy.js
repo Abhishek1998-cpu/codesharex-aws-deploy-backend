@@ -1,19 +1,6 @@
 const { exec } = require("child_process");
-// const path = require("path");
-// const outputPath = path.join(__dirname, "outputs");
-// const fs = require("fs");
-
-// if (!fs.existsSync(outputPath)) {
-//   fs.mkdirSync(outputPath, { recursive: true });
-// }
 
 const executePy = (filePath) => {
-  //   const jobId = path.basename(filePath).split(".")[0];
-  //   const outPath = path.join(outputPath, `${jobId}.out`);
-  // console.log(filePath);
-  // console.log(outPath);
-  // console.log(outputPath);
-  // console.log(jobId);
   return new Promise((resolve, reject) => {
     exec(`python3 ${filePath}`, (error, stdout, stderr) => {
       if (error) {

@@ -14,7 +14,7 @@ let cors = require("cors");
 
 const io = require("socket.io")(http, {
   cors: {
-    origins: ["http://localhost:8080/"],
+    origins: ["http://ec2-54-159-198-233.compute-1.amazonaws.com:5000/"],
   },
 });
 
@@ -49,9 +49,9 @@ function getAllConnectedClients(roomId) {
   );
 }
 
-// App.get("/", (req, res) => {
-//   res.send("<h2>Welcome to the Live Code Share</h2>");
-// });
+App.get("/", (req, res) => {
+  res.send("<h2>Welcome to the Live Code Share</h2>");
+});
 
 App.get("/status", async (req, res) => {
   const jobId = req.query.id;
