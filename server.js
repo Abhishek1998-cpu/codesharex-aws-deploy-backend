@@ -50,7 +50,7 @@ function getAllConnectedClients(roomId) {
 }
 
 App.get("/", (req, res) => {
-  console.log("This server is connected")
+  // console.log("This server is connected")
   res.send("<h2>Welcome to the Live Code Share</h2>");
 });
 
@@ -76,8 +76,8 @@ App.get("/status", async (req, res) => {
 
 App.post("/run", async (req, res) => {
   const { language = "cpp", code } = req.body;
-  console.log(language);
-  console.log(code);
+  // console.log(language);
+  // console.log(code);
   if (code === undefined) {
     return res
       .status(400)
@@ -88,7 +88,7 @@ App.post("/run", async (req, res) => {
     const filePath = await generateFile(language, code);
     // console.log("New 1 = " + filePath);
     job = await new Job({ language, filePath }).save();
-    console.log("Hi hello");
+    // console.log("Hi hello");
     const jobId = job["_id"];
     res.status(201).json({ success: true, jobId });
     let output;
@@ -97,7 +97,7 @@ App.post("/run", async (req, res) => {
       if (language === "py") {
         output = await executePy(filePath);
       } else if (language === "js") {
-        console.log("Execute Js");
+        // console.log("Execute Js");
         output = await executeJs(filePath);
       } else if (language === "c") {
         output = await executeC(filePath);
