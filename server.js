@@ -14,7 +14,7 @@ let cors = require("cors");
 
 const io = require("socket.io")(http, {
   cors: {
-    origins: ["http://ec2-54-159-198-233.compute-1.amazonaws.com:5000/"],
+    origins: ["*"],
   },
 });
 
@@ -50,6 +50,7 @@ function getAllConnectedClients(roomId) {
 }
 
 App.get("/", (req, res) => {
+  console.log("This server is connected")
   res.send("<h2>Welcome to the Live Code Share</h2>");
 });
 
@@ -85,7 +86,7 @@ App.post("/run", async (req, res) => {
   let job;
   try {
     const filePath = await generateFile(language, code);
-    console.log("New 1 = " + filePath);
+    // console.log("New 1 = " + filePath);
     job = await new Job({ language, filePath }).save();
     console.log("Hi hello");
     const jobId = job["_id"];
@@ -110,6 +111,10 @@ App.post("/run", async (req, res) => {
       job["output"] = output;
       await job.save();
     } catch (error) {
+      job["completedAt"] = new Date();
+      job["status"] = "error";
+      job["output"] = JSON.stringify(error);
+      await job.save()
       console.log(error);
     }
   } catch (err) {
