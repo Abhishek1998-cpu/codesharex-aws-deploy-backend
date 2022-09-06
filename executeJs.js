@@ -1,7 +1,6 @@
 const { exec } = require("child_process");
 
 const executeJs = (filePath) => {
-  console.log("FilePath = " + filePath)
   return new Promise((resolve, reject) => {
     exec(`node ${filePath}`, (error, stdout, stderr) => {
       if (error) {
